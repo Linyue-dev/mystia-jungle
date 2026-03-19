@@ -45,12 +45,12 @@ export const {
 
 // Fetch summer map
 const summerMapDefinition = await fetch("./config/summer-map.json").then(
-  (response) => response.json()
+  (response) => response.json(),
 );
 
 // Fetch winter map
 const winterMapDefinition = await fetch("./config/winter-map.json").then(
-  (response) => response.json()
+  (response) => response.json(),
 );
 
 // Load all the assets from their definitions.
@@ -63,7 +63,7 @@ soundDefinitions.forEach((soundDef) => {
     soundDef.path,
     soundDef.size,
     soundDef.volume,
-    soundDef.loop
+    soundDef.loop,
   );
 });
 
@@ -73,7 +73,7 @@ stateMachine.add(GameStateName.GameOver, new GameOverState());
 stateMachine.add(GameStateName.Victory, new VictoryState());
 stateMachine.add(
   GameStateName.Play,
-  new PlayState(summerMapDefinition, winterMapDefinition)
+  new PlayState(summerMapDefinition, winterMapDefinition),
 );
 stateMachine.add(GameStateName.Transition, new TransitionState());
 stateMachine.add(GameStateName.Victory, new VictoryState());
@@ -81,16 +81,16 @@ stateMachine.add(GameStateName.Victory, new VictoryState());
 stateMachine.change(GameStateName.TitleScreen);
 // stateMachine.change(GameStateName.Play, { isWinter: true });
 
-
 const game = new Game(
   stateMachine,
   context,
   timer,
   canvas.width,
-  canvas.height
+  canvas.height,
 );
 
 game.start();
 
-// Focus the canvas so that the player doesn't have to click on it.
-canvas.focus();
+// Focus the canvas so that the player doesn't have to click on it,
+// but without scrolling the page to the canvas position.
+canvas.focus({ preventScroll: true });
